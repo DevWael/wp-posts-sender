@@ -9,6 +9,13 @@ if ( ! defined( '\ABSPATH' ) ) {
 
 class PostsSender {
 
+	/**
+	 * Post requests.
+	 *
+	 * @var array
+	 */
+	private array $post_requests;
+
 	public function __construct() {
 		$this->post_requests = Helpers::post();
 	}
@@ -43,6 +50,8 @@ class PostsSender {
 		if ( ! $this->post_id_exists() ) {
 			wp_send_json_error( [ 'message' => __( 'Post id is not valid.', 'wp-posts-sender' ) ] );
 		}
+
+		wp_send_json_success( [ 'message' => __( 'Post sent successfully.', 'wp-posts-sender' ) ]);
 	}
 
 	/**
@@ -97,8 +106,8 @@ class PostsSender {
 	 */
 	private function nonce_passed(): bool {
 		if (
-			! isset( $this->post_requests['wp_posts_sender_nonce'] )
-			|| ! wp_verify_nonce( $this->post_requests['wp_posts_sender_nonce'], 'wp_posts_sender_nonce' )
+			! isset( $this->post_requests['nonce'] )
+			|| ! wp_verify_nonce( $this->post_requests['nonce'], 'wp_posts_sender_nonce' )
 		) {
 			return false;
 		}
