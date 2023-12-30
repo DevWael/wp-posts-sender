@@ -8,6 +8,10 @@
             nonce = $(this).data('nonce'),
             postId = $(this).data('post-id');
 
+        if (button.hasClass('disabled')) {
+            return;
+        }
+
         $.ajax({
             url: wp_posts_sender.ajax_url,
             type: 'POST',
@@ -20,14 +24,15 @@
             // display loading indicator
             beforeSend: function () {
                 button.find('span').remove();
-                button.append('<span class="dashicons dashicons-update"></span>');
+                button.append('<span class="dashicons dashicons-update" style="margin-top: 4px"></span>');
             },
             success: function (response) {
                 console.log(response);
                 if (response.success) {
                     // remove loading indicator
                     button.find('span').remove();
-                    button.append('<span class="dashicons dashicons-yes"></span>');
+                    button.append('<span class="dashicons dashicons-yes" style="margin-top: 4px"></span>');
+                    button.addClass('disabled');
                 }
             }
         });
