@@ -38,4 +38,26 @@ class Helpers {
 		 */
 		return \apply_filters( 'wp_posts_sender_supported_post_types', [ 'post', 'product' ] );
 	}
+
+	/**
+	 * Get $_GET request parameters.
+	 *
+	 * @return array $_GET request parameters
+	 */
+	public static function get(): array {
+		// phpcs:disable
+		return $_GET;
+		// phpcs:enable
+	}
+
+	/**
+	 * Get $_POST request parameters.
+	 *
+	 * @return array $_POST request parameters
+	 */
+	public static function post(): array {
+		// phpcs:disable
+		return $_POST;
+		// phpcs:enable
+	}
 }
