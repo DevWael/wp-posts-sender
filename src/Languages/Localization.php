@@ -2,6 +2,11 @@
 
 namespace DevWael\WpPostsSender\Languages;
 
+// Exit if accessed directly
+if ( ! defined( '\ABSPATH' ) ) {
+	exit;
+}
+
 class Localization {
 
 	/**
