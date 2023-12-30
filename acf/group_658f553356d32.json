@@ -1,0 +1,100 @@
+{
+    "key": "group_658f553356d32",
+    "title": "Settings",
+    "fields": [
+        {
+            "key": "field_658f5540ad2ee",
+            "label": "Encryption Key",
+            "name": "wp_posts_sender_encryption_key",
+            "type": "textarea",
+            "instructions": "The encryption key must be the same on receiver sites.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_658f5695ad2ef",
+            "label": "Sites",
+            "name": "wp_posts_sender_sites",
+            "type": "repeater",
+            "instructions": "Please include links to websites where the posts can be copied. Make sure that the 'WP posts receiver' is installed on the websites that will receive the posts.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 1,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add Site",
+            "sub_fields": [
+                {
+                    "key": "field_658f57cc79492",
+                    "label": "Site Name",
+                    "name": "site_name",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_658f5706ad2f0",
+                    "label": "Site Link",
+                    "name": "site_link",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "wp-posts-sender-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1703893700
+}
