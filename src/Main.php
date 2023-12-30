@@ -27,6 +27,11 @@ class Main {
 	private Admin\Metabox $meta_box;
 
 	/**
+	 * @var PostsSender
+	 */
+	private PostsSender $posts_sender;
+
+	/**
 	 * Get instance
 	 *
 	 * @return self|null
@@ -45,6 +50,7 @@ class Main {
 	private function __construct() {
 		$this->admin_options = new AdminOptions();
 		$this->meta_box      = new Admin\Metabox();
+		$this->posts_sender  = new PostsSender();
 	}
 
 	/**
@@ -55,5 +61,6 @@ class Main {
 	public function init(): void {
 		$this->admin_options->load_hooks();
 		$this->meta_box->load_hooks();
+		$this->posts_sender->load_hooks();
 	}
 }
