@@ -2,9 +2,9 @@
 
 namespace DevWael\WpPostsSender\Admin;
 
-// Exit if accessed directly
 use DevWael\WpPostsSender\Helpers;
 
+// Exit if accessed directly
 if ( ! defined( '\ABSPATH' ) ) {
 	exit;
 }
@@ -19,6 +19,34 @@ class Metabox {
 	public function load_hooks(): void {
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
 		add_action( 'save_post', [ $this, 'save_post' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'load_admin_js' ] );
+	}
+
+	/**
+	 * Load admin js
+	 *
+	 * @return void
+	 */
+	public function load_admin_js(): void {
+		$screen = get_current_screen();
+		if ( $screen && ! in_array( $screen->post_type, Helpers::supported_post_types(), true ) ) {
+			return;
+		}
+		wp_enqueue_script(
+			'wp-posts-sender-admin-js',
+			WP_POSTS_SENDER_PLUGIN_URL . 'assets/js/admin.js',
+			[ 'jquery' ],
+			WP_POSTS_SENDER_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'wp-posts-sender-admin-js',
+			'wp_posts_sender',
+			[
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+			]
+		);
 	}
 
 	/**
@@ -68,13 +96,13 @@ class Metabox {
 				?>
                 <p>
                     <button type="button"
-                            class="button button-primary"
+                            class="button button-primary wp-posts-sender-button"
                             data-nonce="<?php
-					        echo esc_attr( wp_create_nonce() ) ?>"
+					        echo esc_attr( wp_create_nonce( 'wp_posts_sender_nonce' ) ) ?>"
                             data-site-url="<?php
 					        echo esc_url( $site_url ); ?>"
-                            data-site-name="<?php
-					        echo esc_attr( $site_name ); ?>">
+                            data-post-id="<?php
+					        echo esc_attr( $post->ID ) ?>">
 						<?php
 						echo esc_html( $site_name ); ?>
                     </button>
