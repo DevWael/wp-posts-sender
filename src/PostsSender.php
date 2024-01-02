@@ -114,4 +114,24 @@ class PostsSender {
 
 		return true;
 	}
+
+	/**
+	 * Check if the link is existing.
+	 *
+	 * @param string $link Link to check.
+	 *
+	 * @return bool
+	 */
+	private function is_link_existing( string $link ): bool {
+		$links_array = Helpers::get_acf_field( 'wp_posts_sender_sites', 'option' );
+		if ( ! $links_array ) {
+			return false;
+		}
+
+		foreach ( $links_array as $link_array ) {
+			if ( $link_array['site_link'] === $link ) {
+				return true;
+			}
+		}
+	}
 }
