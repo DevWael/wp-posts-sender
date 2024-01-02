@@ -20,7 +20,7 @@ class Helpers {
 	 * @return mixed
 	 */
 	public static function get_acf_field( string $selector, $post_id = false, bool $format_value = true ) {
-		return function_exists( 'get_field' ) ? get_field( $selector, $post_id, $format_value ) : false;
+		return function_exists( '\get_field' ) ? \get_field( $selector, $post_id, $format_value ) : false;
 	}
 
 	/**
@@ -32,7 +32,7 @@ class Helpers {
 	 * @return mixed
 	 */
 	public static function get_acf_post_fields( $post_id = false, $format_value = true ) {
-		return function_exists( 'get_fields' ) ? get_fields( $post_id, $format_value ) : false;
+		return function_exists( '\get_fields' ) ? \get_fields( $post_id, $format_value ) : false;
 	}
 
 	/**

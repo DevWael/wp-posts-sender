@@ -24,4 +24,4 @@ require_once WP_POSTS_SENDER_PLUGIN_DIR . 'vendor/autoload.php';
 
 use DevWael\WpPostsSender\Main;
 
-Main::getInstance()->init();
+Main::get_instance()->init();
