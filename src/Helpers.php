@@ -24,6 +24,32 @@ class Helpers {
 	}
 
 	/**
+	 * Get all ACF post fields
+	 *
+	 * @param int  $post_id      Post ID.
+	 * @param bool $format_value Format value.
+	 *
+	 * @return mixed
+	 */
+	public static function get_acf_post_fields( $post_id = false, $format_value = true ) {
+		return function_exists( 'get_fields' ) ? get_fields( $post_id, $format_value ) : false;
+	}
+
+	/**
+	 * Get sites rest endpoint.
+	 *
+	 * @return string Sites rest endpoint.
+	 */
+	public static function remote_site_rest_endpoint(): string {
+		/**
+		 * Filter remote site endpoint.
+		 *
+		 * @since 1.0.0
+		 */
+		return apply_filters( 'wp_posts_sender_remote_site_endpoint', 'wp-posts-sender/v1/add-post' );
+	}
+
+	/**
 	 * Get supported post types.
 	 *
 	 * @return array
