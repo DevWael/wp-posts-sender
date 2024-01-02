@@ -35,7 +35,6 @@ class PostsSender {
 	 * @return void
 	 */
 	public function posts_sender() {
-
 		if ( ! $this->has_permission() ) {
 			wp_send_json_error( [ 'message' => __( 'You do not have permission to do this action.', 'wp-posts-sender' ) ] );
 		}
@@ -51,7 +50,57 @@ class PostsSender {
 			wp_send_json_error( [ 'message' => __( 'Post id is not valid.', 'wp-posts-sender' ) ] );
 		}
 
-		wp_send_json_success( [ 'message' => __( 'Post sent successfully.', 'wp-posts-sender' ) ]);
+		if ( ! $this->is_link_existing( $this->post_requests['site_url'] ) ) {
+			wp_send_json_error( [ 'message' => __( 'Site url is not existing.', 'wp-posts-sender' ) ] );
+		}
+
+		$response = $this->send_post_copy( sanitize_text_field( $this->post_requests['post_id'] ), sanitize_url( $this->post_requests['site_url'] ) );
+
+		if ( ! $response || is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200 ) {
+			wp_send_json_error( [ 'message' => __( 'Something went wrong.', 'wp-posts-sender' ) ] );
+		}
+
+		wp_send_json_success( [ 'message' => __( 'Post sent successfully.', 'wp-posts-sender' ), $response ] );
+	}
+
+	/**
+	 * Send post copy to another site.
+	 *
+	 * @param $post_id
+	 * @param $site_url
+	 *
+	 * @return array|false|\WP_Error WP_Error on failure. The response object on success.
+	 */
+	public function send_post_copy( $post_id, $site_url ) {
+		$post = get_post( $post_id );
+		if ( ! $post ) {
+			return false;
+		}
+
+		// Prepare post-data.
+		$post_data = [
+			'post_title'      => $post->post_title,
+			'post_content'    => $post->post_content,
+			'post_status'     => $post->post_status,
+			'post_type'       => $post->post_type,
+			'post_excerpt'    => $post->post_excerpt,
+			'post_image'      => get_the_post_thumbnail_url( $post_id ),
+			'post_url'        => get_permalink( $post_id ),
+			'post_date'       => $post->post_date,
+			'post_taxonomies' => wp_get_post_terms( $post_id, get_object_taxonomies( $post->post_type ) ),
+			'post_acf_fields' => Helpers::get_acf_post_fields( $post_id ),
+			'encrypt_key'     => sanitize_text_field( Helpers::get_acf_field( 'wp_posts_sender_encryption_key', 'option' ) ),
+		];
+		wp_send_json_success( [ 'message' => $post_data] );
+		// Send post data to the remote site.
+		$site_url = untrailingslashit( $site_url ) . '/' . Helpers::remote_site_rest_endpoint();
+
+		return wp_remote_post(
+			$site_url,
+			[
+				'body' => $post_data,
+			]
+		);
 	}
 
 	/**
