@@ -1,5 +1,5 @@
 ## WP Posts Sender
-A WordPres plugin to send posts to a remote website.
+A WordPress plugin to send posts to a remote website.
 
 To use the plugin you need to run `composer install --no-dev` then zip the plugin folder and upload it to your WordPress website.
 
