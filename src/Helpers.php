@@ -46,7 +46,7 @@ class Helpers {
 		 *
 		 * @since 1.0.0
 		 */
-		return apply_filters( 'wp_posts_sender_remote_site_endpoint', 'wp-posts-sender/v1/add-post' );
+		return apply_filters( 'wp_posts_sender_remote_site_endpoint', 'wp-posts-receiver/v1/add-post' );
 	}
 
 	/**
