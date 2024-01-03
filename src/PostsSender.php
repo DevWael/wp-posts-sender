@@ -89,16 +89,19 @@ class PostsSender {
 			'post_date'       => $post->post_date,
 			'post_taxonomies' => wp_get_post_terms( $post_id, get_object_taxonomies( $post->post_type ) ),
 			'post_acf_fields' => Helpers::get_acf_post_fields( $post_id ),
-			'encrypt_key'     => sanitize_text_field( Helpers::get_acf_field( 'wp_posts_sender_encryption_key', 'option' ) ),
+			'post_author'       => $post->post_author,
 		];
-		wp_send_json_success( [ 'message' => $post_data] );
+
 		// Send post data to the remote site.
-		$site_url = untrailingslashit( $site_url ) . '/' . Helpers::remote_site_rest_endpoint();
+		$site_url = untrailingslashit( $site_url ) . '/wp-json/' . Helpers::remote_site_rest_endpoint();
 
 		return wp_remote_post(
 			$site_url,
 			[
-				'body' => $post_data,
+				'body'      => [
+					'post_data'   => (array) $post_data,
+					'encrypt_key' => sanitize_text_field( Helpers::get_acf_field( 'wp_posts_sender_encryption_key', 'option' ) ),
+				],
 			]
 		);
 	}
