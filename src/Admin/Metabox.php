@@ -18,7 +18,6 @@ class Metabox {
 	 */
 	public function load_hooks(): void {
 		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes' ] );
-		add_action( 'save_post', [ $this, 'save_post' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'load_admin_js' ] );
 	}
 
