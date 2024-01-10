@@ -89,7 +89,7 @@ class PostsSender {
 			'post_date'       => $post->post_date,
 			'post_taxonomies' => wp_get_post_terms( $post_id, get_object_taxonomies( $post->post_type ) ),
 			'post_acf_fields' => Helpers::get_acf_post_fields( $post_id ),
-			'post_author'       => $post->post_author,
+			'post_author'     => $post->post_author,
 		];
 
 		// Send post data to the remote site.
@@ -98,7 +98,7 @@ class PostsSender {
 		return wp_remote_post(
 			$site_url,
 			[
-				'body'      => [
+				'body' => [
 					'post_data'   => (array) $post_data,
 					'encrypt_key' => sanitize_text_field( Helpers::get_acf_field( 'wp_posts_sender_encryption_key', 'option' ) ),
 				],
@@ -185,5 +185,7 @@ class PostsSender {
 				return true;
 			}
 		}
+
+		return false;
 	}
 }
