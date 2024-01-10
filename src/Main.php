@@ -4,7 +4,7 @@ namespace DevWael\WpPostsSender;
 
 // Exit if accessed directly
 use DevWael\WpPostsSender\Admin\AdminOptions;
-use DevWael\WpPostsSender\languages\Localization;
+use DevWael\WpPostsSender\Languages\Localization;
 
 if ( ! defined( '\ABSPATH' ) ) {
 	exit;
