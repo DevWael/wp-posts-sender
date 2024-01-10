@@ -28,7 +28,6 @@
                 button.append('<span class="dashicons dashicons-update" style="margin-top: 4px"></span>');
             },
             success: function (response) {
-                console.log(response);
                 if (response.success) {
                     // remove loading indicator
                     button.find('span').remove();
