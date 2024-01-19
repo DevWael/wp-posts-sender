@@ -62,7 +62,7 @@ class Helpers {
 		 *
 		 * @ssince 1.0.0
 		 */
-		return \apply_filters( 'wp_posts_sender_supported_post_types', [ 'post', 'product' ] );
+		return \apply_filters( 'wp_posts_sender_supported_post_types', [ 'post', 'product', 'manual' ] );
 	}
 
 	/**
