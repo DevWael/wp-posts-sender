@@ -90,6 +90,7 @@ class PostsSender {
 			'post_taxonomies' => wp_get_post_terms( $post_id, get_object_taxonomies( $post->post_type ) ),
 			'post_acf_fields' => Helpers::get_acf_post_fields( $post_id ),
 			'post_author'     => $post->post_author,
+			'page_template'   => get_page_template_slug( $post_id ),
 		];
 
 		// Send post data to the remote site.
